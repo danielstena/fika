@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { User } from '../types/models';
 import { getUsersSortedByFika } from '../firebase/db';
+import { Timestamp } from 'firebase/firestore';
 
 export default function Statistics() {
   const [users, setUsers] = useState<User[]>([]);
@@ -13,6 +14,11 @@ export default function Statistics() {
     };
     fetchUsers();
   }, []);
+
+  const formatLastFikaDate = (user: User): string => {
+    if (!user.lastFikaDate) return 'Aldrig';
+    else return new Date((user.lastFikaDate as unknown as Timestamp).toDate()).toLocaleDateString('sv-SE');
+  };
 
   return (
     <div className="p-4">
@@ -33,9 +39,7 @@ export default function Statistics() {
                 <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{user.fikaCount || 0}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {user.fikaCount > 0
-                    ? new Date(user.lastFikaDate?.seconds * 1000).toLocaleDateString('sv-SE')
-                    : 'Aldrig'}
+                  {formatLastFikaDate(user)}
                 </td>
               </tr>
             ))}
