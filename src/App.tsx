@@ -4,8 +4,24 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Team from './pages/Team';
 import Statistics from './pages/Statistics';
+import { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
+import PasswordProtection from './components/PasswordProtection';
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const authCookie = Cookies.get('auth');
+    if (authCookie === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  if (!isAuthenticated) {
+    return <PasswordProtection onAuthenticated={() => setIsAuthenticated(true)} />;
+  }
+
   return (
     <BrowserRouter>
       <div className="min-h-screen flex flex-col">
