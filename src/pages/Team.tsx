@@ -58,7 +58,10 @@ export default function Team() {
         </button>
       </div>
 
-      <h2 className="text-xl font-bold mb-4">Teammedlemmar</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-bold">Teammedlemmar</h2>
+      </div>
+
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
           <thead className="bg-gray-100">

@@ -1,19 +1,35 @@
 import { useEffect, useState } from 'react';
 import { User } from '../types/models';
-import { getUsersSortedByFika } from '../firebase/db';
+import { getUsersSortedByFika, updateUser } from '../firebase/db';
 import { Timestamp } from 'firebase/firestore';
 
 export default function Statistics() {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const sortedUsers = await getUsersSortedByFika();
-      const sortedByFikaCount = [...sortedUsers].sort((a, b) => (b.fikaCount || 0) - (a.fikaCount || 0));
-      setUsers(sortedByFikaCount);
-    };
     fetchUsers();
   }, []);
+
+  const fetchUsers = async () => {
+    const sortedUsers = await getUsersSortedByFika();
+    const sortedByFikaCount = [...sortedUsers].sort((a, b) => (b.fikaCount || 0) - (a.fikaCount || 0));
+    setUsers(sortedByFikaCount);
+  };
+
+  const handleResetStats = async () => {
+    const updatedUsers = users.map(user => ({
+      ...user,
+      fikaCount: 0,
+      lastFikaDate: null
+    }));
+    
+    // Update each user
+    for (const user of updatedUsers) {
+      await updateUser(user);
+    }
+    
+    await fetchUsers();
+  };
 
   const formatLastFikaDate = (user: User): string => {
     if (!user.lastFikaDate) return 'Aldrig';
@@ -22,7 +38,15 @@ export default function Statistics() {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">STATISTIK</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold text-center">STATISTIK</h1>
+        <button 
+          onClick={handleResetStats}
+          className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded"
+        >
+          Nollställ statistik
+        </button>
+      </div>
       
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white shadow-md rounded-lg">

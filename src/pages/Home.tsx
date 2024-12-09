@@ -6,6 +6,7 @@ export default function Home() {
   const [users, setUsers] = useState<User[]>([]);
   const [fikaHost, setFikaHost] = useState<User | null>(null);
   const [isSpinning, setIsSpinning] = useState(false);
+  const [overrideFriday, setOverrideFriday] = useState(false);
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -122,41 +123,57 @@ export default function Home() {
           {fikaHost.name}
         </div>
       ) : (
-        <button 
-          style={{
-            padding: '60px 120px',
-            fontSize: '64px',
-            backgroundColor: '#1a237e',
-            color: '#90CAF9',
-            border: 'none',
-            borderRadius: '32px',
-            cursor: checkIfFriday() ? 'pointer' : 'not-allowed',
-            boxShadow: '0 8px 24px rgba(13, 71, 161, 0.4)',
-            transition: 'all 0.3s ease',
-            opacity: checkIfFriday() ? 1 : 0.5,
-            background: 'linear-gradient(135deg, #283593, #1a237e)',
-            textShadow: '2px 2px 6px rgba(0,0,0,0.3)',
-            fontWeight: 'bold',
-          }}
-          disabled={!checkIfFriday() || isSpinning}
-          onMouseEnter={(e) => {
-            if (checkIfFriday()) {
-              e.currentTarget.style.transform = 'scale(1.05)';
-              e.currentTarget.style.boxShadow = '0 12px 32px rgba(13, 71, 161, 0.6)';
-              e.currentTarget.style.background = 'linear-gradient(135deg, #1a237e, #0d47a1)';
-              e.currentTarget.style.color = '#E3F2FD';
-            }
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = '';
-            e.currentTarget.style.boxShadow = '';
-            e.currentTarget.style.background = '';
-            e.currentTarget.style.color = '';
-          }}
-          onClick={handleFikaSelection}
-        >
-          SPINN THE WHEEL
-        </button>
+        <>
+          <label style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            fontSize: '18px',
+            color: '#1a237e'
+          }}>
+            <input
+              type="checkbox"
+              checked={overrideFriday}
+              onChange={(e) => setOverrideFriday(e.target.checked)}
+            />
+            Override Friday check
+          </label>
+          <button 
+            style={{
+              padding: '60px 120px',
+              fontSize: '64px',
+              backgroundColor: '#1a237e',
+              color: '#90CAF9',
+              border: 'none',
+              borderRadius: '32px',
+              cursor: (checkIfFriday() || overrideFriday) ? 'pointer' : 'not-allowed',
+              boxShadow: '0 8px 24px rgba(13, 71, 161, 0.4)',
+              transition: 'all 0.3s ease',
+              opacity: (checkIfFriday() || overrideFriday) ? 1 : 0.5,
+              background: 'linear-gradient(135deg, #283593, #1a237e)',
+              textShadow: '2px 2px 6px rgba(0,0,0,0.3)',
+              fontWeight: 'bold',
+            }}
+            disabled={!(checkIfFriday() || overrideFriday) || isSpinning}
+            onMouseEnter={(e) => {
+              if (checkIfFriday() || overrideFriday) {
+                e.currentTarget.style.transform = 'scale(1.05)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(13, 71, 161, 0.6)';
+                e.currentTarget.style.background = 'linear-gradient(135deg, #1a237e, #0d47a1)';
+                e.currentTarget.style.color = '#E3F2FD';
+              }
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = '';
+              e.currentTarget.style.boxShadow = '';
+              e.currentTarget.style.background = '';
+              e.currentTarget.style.color = '';
+            }}
+            onClick={handleFikaSelection}
+          >
+            SPINN THE WHEEL
+          </button>
+        </>
       )}
 
       <style>{`
