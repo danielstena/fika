@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { User } from '../types/models';
 import { getUsersSortedByFika, updateUser } from '../firebase/db';
-import { Timestamp } from 'firebase/firestore';
+import { Timestamp, deleteField } from 'firebase/firestore';
 
 export default function Statistics() {
   const [users, setUsers] = useState<User[]>([]);
@@ -20,7 +20,7 @@ export default function Statistics() {
     const updatedUsers = users.map(user => ({
       ...user,
       fikaCount: 0,
-      lastFikaDate: undefined
+      lastFikaDate: deleteField()
     }));
     
     // Update each user
