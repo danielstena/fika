@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getUsers, updateUser } from '../firebase/db';
 import { User } from '../types/models';
+import { Timestamp } from 'firebase/firestore';
 
 export default function Home() {
   const [users, setUsers] = useState<User[]>([]);
@@ -30,11 +31,11 @@ export default function Home() {
       
       let daysSinceLastFika = 365;
       if (user.lastFikaDate) {
-        const lastFikaDate = 'toDate' in user.lastFikaDate 
-          ? (user.lastFikaDate as { toDate(): Date }).toDate() 
-          : new Date(user.lastFikaDate);
-        if (lastFikaDate instanceof Date && !isNaN(lastFikaDate.getTime())) {
+        if (user.lastFikaDate instanceof Timestamp) {
+          const lastFikaDate = user.lastFikaDate.toDate();
           daysSinceLastFika = Math.max(1, (new Date().getTime() - lastFikaDate.getTime()) / (1000 * 3600 * 24));
+        } else if (user.lastFikaDate instanceof Date) {
+          daysSinceLastFika = Math.max(1, (new Date().getTime() - user.lastFikaDate.getTime()) / (1000 * 3600 * 24));
         }
       }
 
