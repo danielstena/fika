@@ -20,7 +20,7 @@ export default function Statistics() {
     const updatedUsers = users.map(user => ({
       ...user,
       fikaCount: 0,
-      lastFikaDate: null
+      lastFikaDate: undefined
     }));
     
     // Update each user
