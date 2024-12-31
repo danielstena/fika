@@ -7,3 +7,9 @@ export interface User {
   fikaCount?: number;
   lastFikaDate?: Date | FieldValue;
 }
+
+export interface Team {
+  id: string;
+  name: string;
+  users: User[];
+}

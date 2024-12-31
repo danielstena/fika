@@ -61,15 +61,7 @@ export default function Navbar() {
                 to="/team"
                 className={getLinkClasses('/team')}
               >
-                Team
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/statistics"
-                className={getLinkClasses('/statistics')}
-              >
-                Statistik
+                Edit Team
               </Link>
             </li>
           </ul>
