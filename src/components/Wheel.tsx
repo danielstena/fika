@@ -23,7 +23,8 @@ const WheelComponent: React.FC<WheelComponentProps> = ({ onRefresh, setIsSpinnin
   const [users, setUsers] = useState<User[]>([]);
   useEffect(() => {
     const fetchUsers = async () => {
-      const users = await getUsers();
+      let users = await getUsers();
+      users = users.filter((user: User) => user.active);
  
       const shuffledUsers = [...users].sort(() => Math.random() - 0.5);
       setUsers(shuffledUsers);

@@ -7,6 +7,7 @@ export interface User {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   lastFikaDate?: Date | any;
   percentage?: number;
+  active?: boolean;
 }
 
 export interface Team {

@@ -43,6 +43,7 @@ export default function Statistics() {
             <tr>
               <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Nickname</th>
               <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">active</th>
               <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Number of fikas</th>
               <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Latest fika</th>
             </tr>
@@ -52,6 +53,7 @@ export default function Statistics() {
               <tr key={user.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap text-center">{user?.nickname}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">{user?.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-center">{user?.active ? 'Yes' : 'No'}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">{user?.fikaCount || 0}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
                   {formatLastFikaDate(user)}
