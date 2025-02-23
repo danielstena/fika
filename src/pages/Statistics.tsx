@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { User } from '../types/models';
 import { getUsersSortedByFika } from '../firebase/db';
-import { Timestamp } from 'firebase/firestore';
 
 export default function Statistics() {
   const [users, setUsers] = useState<User[]>([]);
@@ -10,14 +9,28 @@ export default function Statistics() {
     fetchUsers();
   }, []);
 
+
+  const getPercentageOfFikas = (user: User): number => {
+    const totalFikas = users.reduce((acc, curr) => acc + (curr.fikaCount || 0), 0);
+    return (user.fikaCount || 0) / totalFikas;
+  };
+
   const fetchUsers = async () => {
-    const sortedUsers = await getUsersSortedByFika();
+    let sortedUsers = await getUsersSortedByFika();
+    const percentages = sortedUsers.map((user: User) => getPercentageOfFikas(user));
+    
+    sortedUsers = sortedUsers.map((user: User, index: number) => ({
+      ...user,
+      percentage: percentages[index]
+    }));
+
     const sortedByFikaCount = [...sortedUsers].sort((a, b) => (b.fikaCount || 0) - (a.fikaCount || 0));
+
     setUsers(sortedByFikaCount);
   };
   const formatLastFikaDate = (user: User): string => {
     if (!user.lastFikaDate) return 'Aldrig';
-    else return new Date((user.lastFikaDate as unknown as Timestamp).toDate()).toLocaleDateString('sv-SE');
+    else return new Date((user.lastFikaDate as any).toDate()).toLocaleDateString('sv-SE');
   };
 
   return (
@@ -27,16 +40,18 @@ export default function Statistics() {
         <table className="min-w-full bg-white shadow-md rounded-lg">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Namn</th>
-              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Antal fikor</th>
-              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Senaste fika</th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Nickname</th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Number of fikas</th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Latest fika</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
             {users.map((user) => (
               <tr key={user.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-center">{user.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-center">{user.fikaCount || 0}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-center">{user?.nickname}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-center">{user?.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-center">{user?.fikaCount || 0}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
                   {formatLastFikaDate(user)}
                 </td>

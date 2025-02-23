@@ -7,7 +7,6 @@ import Statistics from './pages/Statistics';
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import PasswordProtection from './components/PasswordProtection';
-
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 

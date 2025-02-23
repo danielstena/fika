@@ -1,11 +1,11 @@
-import { FieldValue } from 'firebase/firestore';
-
 export interface User {
   id: string;
   name: string;
+  nickname: string;
   createdAt: Date;
   fikaCount?: number;
-  lastFikaDate?: Date | FieldValue;
+  lastFikaDate?: Date | any;
+  percentage?: number;
 }
 
 export interface Team {

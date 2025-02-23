@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 export default function Team() {
   const [users, setUsers] = useState<any[]>([]);
   const [name, setName] = useState('');
-
+  const [nickname, setNickname] = useState('');
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -15,16 +15,18 @@ export default function Team() {
   };
 
   const handleCreateUser = async () => {
-    if (!name.trim()) return;
+    if (!name.trim() || !nickname.trim()) return;
     
     const newUser = {
       name: name,
+      nickname: nickname,
       createdAt: new Date(),
       fikaCount: 0
     };
     
     await createUser(newUser);
-    setName('');  // Reset input
+    setName('');
+    setNickname('');
     await fetchUsers();
   };
 
@@ -42,7 +44,7 @@ export default function Team() {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Ange namn"
+          placeholder="Enter name"
           className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
@@ -50,30 +52,38 @@ export default function Team() {
             }
           }}
         />
+        <input
+          type="text"
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value)}
+          placeholder="Enter nickname"
+        />
         <button 
           className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
           onClick={handleCreateUser}
         >
-          Lägg till
+          Add Member
         </button>
       </div>
 
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">Teammedlemmar</h2>
+        <h2 className="text-xl font-bold">Team Members</h2>
       </div>
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
           <thead className="bg-gray-100">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Namn</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Skapad</th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Åtgärder</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nickname</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
             {users.map((user) => (
               <tr key={user.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap">{user.nickname}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {user.createdAt?.toDate().toLocaleDateString('sv-SE')}
