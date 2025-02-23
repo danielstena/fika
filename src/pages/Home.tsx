@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { getUsers, updateUser } from '../firebase/db';
+import { getUsers } from '../firebase/db';
 import { User } from '../types/models';
 import  Statistics  from './Statistics';
 import LastSelectedUser from '../components/LastSelectedUser';
 import Wheel from '../components/Wheel';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 export default function Home() {
   const [users, setUsers] = useState<User[]>([]);

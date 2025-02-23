@@ -31,7 +31,7 @@ export default function NameSpinner({
       return;
     }
 
-    let startTime = Date.now();
+    const startTime = Date.now();
     let interval: NodeJS.Timeout;
     
     const updateName = () => {

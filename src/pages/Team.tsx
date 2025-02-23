@@ -1,8 +1,8 @@
 import { createUser, getUsers, deleteUser } from '../firebase/db';
 import { useState, useEffect } from 'react';
-
+import { User } from '../types/models';
 export default function Team() {
-  const [users, setUsers] = useState<any[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [name, setName] = useState('');
   const [nickname, setNickname] = useState('');
   useEffect(() => {

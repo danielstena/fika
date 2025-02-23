@@ -59,9 +59,10 @@ export const updateUserFika = async (userId: string) => {
 export const getUsersSortedByFika = async () => {
   const snapshot = await getDocs(usersCollection);
   return snapshot.docs
-    .map(doc => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .map((doc: any) => ({
       id: doc.id,
       ...doc.data()
     } as User))
-    .sort((a, b) => (a.fikaCount || 0) - (b.fikaCount || 0));
+    .sort((a: User, b: User) => (a.fikaCount || 0) - (b.fikaCount || 0));
 };

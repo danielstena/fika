@@ -10,14 +10,5 @@ const firebaseConfig = {
     appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
-/* const firebaseConfig = {
-  apiKey: "AIzaSyAjUFM2u2nc78FXv9Ba4LnTaKZ78jAOxBM",
-  authDomain: "fika-8aec8.firebaseapp.com",
-  projectId: "fika-8aec8",
-  storageBucket: "fika-8aec8.firebasestorage.app",
-  messagingSenderId: "739628553615",
-  appId: "1:739628553615:web:361c27d13464bb991de7fa"
-}; */
-
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app); 

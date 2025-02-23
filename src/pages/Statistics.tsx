@@ -29,7 +29,8 @@ export default function Statistics() {
     setUsers(sortedByFikaCount);
   };
   const formatLastFikaDate = (user: User): string => {
-    if (!user.lastFikaDate) return 'Aldrig';
+    if (!user.lastFikaDate) return 'Never';
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     else return new Date((user.lastFikaDate as any).toDate()).toLocaleDateString('sv-SE');
   };
 

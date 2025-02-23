@@ -4,7 +4,7 @@ export interface User {
   nickname: string;
   createdAt: Date;
   fikaCount?: number;
-  lastFikaDate?: Date | any;
+  lastFikaDate?: Date;
   percentage?: number;
 }
 
