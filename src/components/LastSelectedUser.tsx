@@ -38,9 +38,13 @@ export default function LastSelectedUser({ users }: LastSelectedUserProps) {
       <div style={userNameStyle}>
         {users
           .sort((a, b) => {
-            const dateA = a.lastFikaDate instanceof Timestamp ? a.lastFikaDate.toDate() : (a.lastFikaDate as Date);
-            const dateB = b.lastFikaDate instanceof Timestamp ? b.lastFikaDate.toDate() : (b.lastFikaDate as Date);
-            return (dateB?.getTime() ?? 0) - (dateA?.getTime() ?? 0);
+            const dateA = a.lastFikaDate ? 
+              (a.lastFikaDate instanceof Timestamp ? a.lastFikaDate.toDate() : a.lastFikaDate) : 
+              new Date(0);
+            const dateB = b.lastFikaDate ? 
+              (b.lastFikaDate instanceof Timestamp ? b.lastFikaDate.toDate() : b.lastFikaDate) : 
+              new Date(0);
+            return dateB.getTime() - dateA.getTime();
           })[0]?.name || 'Ingen vald än'}
       </div>
     </section>

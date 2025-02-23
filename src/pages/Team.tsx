@@ -1,6 +1,7 @@
 import { createUser, getUsers, deleteUser } from '../firebase/db';
 import { useState, useEffect } from 'react';
 import { User } from '../types/models';
+
 export default function Team() {
   const [users, setUsers] = useState<User[]>([]);
   const [name, setName] = useState('');
@@ -86,7 +87,8 @@ export default function Team() {
                 <td className="px-6 py-4 whitespace-nowrap">{user.nickname}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {user.createdAt?.toDate().toLocaleDateString('sv-SE')}
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                  {(user.createdAt as any)?.toLocaleDateString('sv-SE')}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">
                   <button

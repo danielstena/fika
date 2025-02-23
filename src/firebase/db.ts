@@ -25,7 +25,8 @@ export const createUser = async (userData: Omit<User, 'id'>) => {
 // Hämta alla användare
 export const getUsers = async () => {
   const snapshot = await getDocs(usersCollection);
-  return snapshot.docs.map(doc => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-vars
+  return snapshot.docs.map((doc: any) => ({
     id: doc.id,
     ...doc.data()
   } as User));

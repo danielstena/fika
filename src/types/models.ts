@@ -4,7 +4,8 @@ export interface User {
   nickname: string;
   createdAt: Date;
   fikaCount?: number;
-  lastFikaDate?: Date;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  lastFikaDate?: Date | any;
   percentage?: number;
 }
 
