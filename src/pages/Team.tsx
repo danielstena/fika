@@ -87,8 +87,9 @@ export default function Team() {
                 <td className="px-6 py-4 whitespace-nowrap">{user.nickname}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                  {(user.createdAt as any)?.toLocaleDateString('sv-SE')}
+                  {user.createdAt instanceof Date 
+                    ? user.createdAt.toLocaleDateString('sv-SE')
+                    : new Date((user.createdAt as any).seconds * 1000).toLocaleDateString('sv-SE')}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">
                   <button
