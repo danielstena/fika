@@ -114,7 +114,7 @@ const WheelComponent: React.FC<WheelComponentProps> = ({ onRefresh, setIsSpinnin
     const nextFikaHost = users.find(user => user.nickname === winningOption) || null;
 
     setWinner(nextFikaHost);
-    const lastThreFikaHosts = sortUsersByLastFikaDate(users, 5);
+    const lastThreFikaHosts = sortUsersByLastFikaDate(users, 3);
     if (lastThreFikaHosts.find(user => user.nickname === nextFikaHost?.nickname)) {
       console.log('User is already in the last three fika hosts');
       setOpenModal(true);

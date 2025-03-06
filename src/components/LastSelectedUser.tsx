@@ -67,7 +67,7 @@ export default function LastSelectedUser({ users }: LastSelectedUserProps) {
 
   return (
     <section style={containerStyle}>
-      <h2 style={titleStyle}>Three last fika hosts</h2>
+      <h2 style={titleStyle}>Three last fika hosts!</h2>
       <div style={userListStyle}>
         {sortedUsers.map((user) => (
           <div key={user.id} style={userItemStyle}>
