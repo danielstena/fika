@@ -7,6 +7,7 @@ import Statistics from './pages/Statistics';
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import PasswordProtection from './components/PasswordProtection';
+import { Analytics } from "@vercel/analytics/react"
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -22,6 +23,8 @@ function App() {
   }
 
   return (
+    <>
+    <Analytics />
     <BrowserRouter>
       <div className="min-h-screen flex flex-col">
         <Navbar />
@@ -34,6 +37,7 @@ function App() {
         </div>
       </div>
     </BrowserRouter>
+    </>
   );
 }
 
