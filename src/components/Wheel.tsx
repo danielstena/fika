@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Wheel } from 'react-custom-roulette'
 import { User } from '../types/models';
 import { updateUser, getUsers } from '../firebase/db';
-import { sortUsersByLastFikaDate } from '../utils/dateHelpers';
-import { Modal, Box, Typography } from '@mui/material';
+//import { sortUsersByLastFikaDate } from '../utils/dateHelpers';
+//import { Modal, Box, Typography } from '@mui/material';
 
 interface WheelComponentProps {
   onRefresh: () => Promise<void>;
@@ -23,7 +23,8 @@ type WheelData = {
 
 const WheelComponent: React.FC<WheelComponentProps> = ({ onRefresh, setIsSpinning, isSpinning }) => {
   const [users, setUsers] = useState<User[]>([]);
-  const [winner, setWinner] = useState<User | null>(null);
+  //const [winner, setWinner] = useState<User | null>(null);
+  //const [openModal, setOpenModal] = useState(false);
   useEffect(() => {
     const fetchUsers = async () => {
       let users = await getUsers();
@@ -41,7 +42,6 @@ const WheelComponent: React.FC<WheelComponentProps> = ({ onRefresh, setIsSpinnin
     prizeNumber: 0
   });
   const [data, setData] = useState<WheelData[]>([]);
-  const [openModal, setOpenModal] = useState(false);
 
   const COLORS = ['#ffb3ba', '#baffc9', '#bae1ff', '#ffffba', '#e2baff', '#ffd8ba', '#ffb3e6', '#deb887', '#d3d3d3', '#f8f9fa', '#ffffff'];
   const SPIN_DURATION = import.meta.env.VITE_SPIN_DURATION || 1;
@@ -94,19 +94,19 @@ const WheelComponent: React.FC<WheelComponentProps> = ({ onRefresh, setIsSpinnin
     setWheelState(prev => ({ ...prev, prizeNumber: newPrizeNumber, mustSpin: true }));
   };
 
-  const modalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: '#fff',
-    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
-    p: 6,
-    borderRadius: 4,
-    textAlign: 'center',
-    border: '2px solid #1a237e',
-  };
+  //const modalStyle = {
+  //  position: 'absolute',
+  //  top: '50%',
+  //  left: '50%',
+  //  transform: 'translate(-50%, -50%)',
+  //  width: 400,
+  //  bgcolor: '#fff',
+  //  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+  //  p: 6,
+  //  borderRadius: 4,
+  //  textAlign: 'center',
+  //  border: '2px solid #1a237e',
+  //};
 
   const handleStopSpinning = async () => {
     setWheelState(prev => ({ ...prev, isSpinning: true, mustSpin: false }));
@@ -178,8 +178,8 @@ const WheelComponent: React.FC<WheelComponentProps> = ({ onRefresh, setIsSpinnin
             )}
         </div>
 
-      <Modal
-        open={openModal}
+      {/* <Modal
+        //open={openModal}
         onClose={() => window.location.reload()}
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
@@ -218,7 +218,7 @@ const WheelComponent: React.FC<WheelComponentProps> = ({ onRefresh, setIsSpinnin
             Spin again! 🎲
           </Typography>
         </Box>
-      </Modal>
+      </Modal> */}
 
     </div>
   );
