@@ -113,13 +113,16 @@ const WheelComponent: React.FC<WheelComponentProps> = ({ onRefresh, setIsSpinnin
     const winningOption = data[wheelState.prizeNumber].option;
     const nextFikaHost = users.find(user => user.nickname === winningOption) || null;
 
-    setWinner(nextFikaHost);
-    const lastThreFikaHosts = sortUsersByLastFikaDate(users, 3);
-    if (lastThreFikaHosts.find(user => user.nickname === nextFikaHost?.nickname)) {
-      console.log('User is already in the last three fika hosts');
-      setOpenModal(true);
-      return;
-    }
+    /*     
+      setWinner(nextFikaHost);
+      const lastThreFikaHosts = sortUsersByLastFikaDate(users, 2);
+      if (lastThreFikaHosts.find(user => user.nickname === nextFikaHost?.nickname)) {
+        console.log('User is already in the last three fika hosts');
+        setOpenModal(true);
+        return;
+      } 
+    */
+
     if (!nextFikaHost) return;
 
     updateFikaHost(nextFikaHost);
